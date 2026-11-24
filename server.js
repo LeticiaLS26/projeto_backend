@@ -1,27 +1,56 @@
 const http = require("node:http");
 
-const livros = [{
-    titulo: "O corvo",
-    autor: "Edgar Allan Poe",
-    preco: 69.90
-}];
+const livros = [
+  {
+    id: "sally-adventure-book",
+    titulo: "As Aventuras de Sally",
+    autor: "A. Writer",
+    descricao: "Uma expedição que muda tudo.",
+    preco: 39.9,
+  },
+  {
+    id: "dave-cooking-book",
+    titulo: "A Cozinha do Dave",
+    autor: "D. Chef",
+    descricao: "Receitas para quem queimou a primeira.",
+    preco: 29.5,
+  },
+];
 
-http.createServer((req, res) => {
-    let corpo, status = 200;
-    if (req.url === "/") {
-        corpo = "Bem-vindo a API da XYZ Bookstore";
-    } else if (req.url === "/livros") {
-        corpo = JSON.stringify(livros);
-    } else if (req.url === "/carrinho") {
-        corpo = "Rota do carrinho - em construcao.";
+const servidor = http.createServer((req, res) => {
+  const [caminho, query] = req.url.split("?");
+  const params = new URLSearchParams(query || "");
+  const partes = caminho.split("/");
+
+  let corpo;
+  let status = 200;
+
+  if (caminho === "/") {
+    corpo = JSON.stringify({ mensagem: "Bem-vindo a API da XYZ Bookstore" });
+  } else if (caminho === "/livros") {
+    const autor = params.get("autor");
+    const resultado = autor
+      ? livros.filter((l) => l.autor.toLowerCase().includes(autor.toLowerCase()))
+      : livros;
+    corpo = JSON.stringify(resultado);
+  } else if (partes[1] === "livros" && partes[2]) {
+    const livro = livros.find((l) => l.id === partes[2]);
+    if (livro) {
+      corpo = JSON.stringify(livro);
     } else {
-        status = 404;
-        corpo = JSON.stringify({ erro: "rota inexistente" });
+      status = 404;
+      corpo = JSON.stringify({ erro: "livro nao encontrado" });
     }
+  } else if (caminho === "/carrinho") {
+    corpo = JSON.stringify({ mensagem: "Rota do carrinho - em construcao" });
+  } else {
+    status = 404;
+    corpo = JSON.stringify({ erro: "rota inexistente" });
+  }
 
-    res.writeHead(200, { "content-type": "application/json; charset=utf-8" });
-    res.end("<h1>XYZ Bookstore</h1><p>Livraria.</p>");
-}).listen(3000);
+  res.writeHead(status, { "content-type": "application/json; charset=utf-8" });
+  res.end(corpo);
+});
 
-//console.log("XYZ Bookstore no ar em http://localhost:3000/livros");
-
+servidor.listen(3000);
+console.log("XYZ Bookstore no ar em http://localhost:3000");

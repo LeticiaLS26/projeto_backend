@@ -1,0 +1,144 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+:root{
+  --color-bg:       #d3c9f8;   /* fundo da página    */
+  --color-surface:  #e8e2ff;     /* fundo dos cards    */
+  --color-ink:      #222222;   /* texto corrido      */
+  --color-heading:  rgb(41, 22, 109);   /* títulos            */
+  --color-muted:    rgb(22, 5, 173);   /* sinopse            */
+  --color-line:     hsl(220 15% 60%);   /* borda do card      */
+  --color-brand:    hsl(120 100% 23%);  /* ação               */
+  --color-on-brand: hsl(0 0% 100%);     /* tinta sobre a ação */
+  --color-accent:   rgba(42, 0, 139, 0.719);    /* o destaque do Step 17 */
+  --color-ring:     hsl(210 90% 45%);   /* anel de foco       */
+}
+body {
+  background-color: var(--color-bg);
+  color: var(--color-ink);
+  font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: 0 1rem 2rem;
+}
+
+h1 {
+  color: var(--color-brand);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 2.5rem;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  text-align: center;
+}
+
+h2 {
+  color: var(--color-accent);
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+p {
+  color: var(--color-heading);
+  font-size: 1rem;
+}
+
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.card {
+  background-color: var(--color-surface);
+  padding: 1rem 1.5rem;
+  border: 2px solid var(--color-line);
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 12px hsl(220 30% 10% / 0.2);
+}
+
+.card p {
+  color: var(--color-muted);
+  font-size: 0.95rem;
+}
+
+.destaque {
+  border-left: 5px solid var(--color-brand);
+}
+
+.btn {
+  background-color: var(--color-brand);
+  color: var(--color-on-brand);
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.5rem 1.25rem;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: transform 180ms ease-out, background-color 180ms ease-out;
+}
+
+.btn:hover {
+  background-color: var(--color-brand-hover);
+  transform: translateY(-2px);
+}
+
+.btn:active {
+  background-color: var(--color-brand-active);
+  transform: translateY(0);
+}
+
+.btn:focus-visible {
+  outline: 3px solid var(--color-ring);
+  outline-offset: 2px;
+}
+
+.btn-primary {
+  background-color: var(--color-accent);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-accent-hover);
+}
+
+.btn-primary:active {
+  background-color: var(--color-accent-active);
+}
+
+.btn-container {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1rem;
+}
+
+@media (min-width: 30rem) {
+  .btn-container {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg:               hsl(255 20% 10%);
+    --color-surface:          hsl(255 18% 15%);
+    --color-ink:              hsl(255 12% 88%);
+    --color-heading:          hsl(255 15% 94%);
+    --color-muted:            hsl(255 10% 68%);
+    --color-line:             hsl(255 16% 28%);
+    --color-brand:            hsl(260 80% 74%);
+    --color-brand-hover:      hsl(260 80% 80%);
+    --color-brand-active:     hsl(260 80% 85%);
+    --color-on-brand:         hsl(255 30% 8%);
+    --color-accent:           hsl(42 90% 60%);
+    --color-accent-hover:     hsl(42 90% 66%);
+    --color-accent-active:    hsl(42 90% 71%);
+    --color-ring:             hsl(275 90% 72%);
+  }
+}

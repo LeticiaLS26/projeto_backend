@@ -1,18 +1,15 @@
 const livros = [
-    {
-
-        titulo: "O corvo",
-        autor: "Edgar Allan Poe",
-        preco: 69.90
-
-    },
-    {
-        titulo: "Donnie Darko",
-        autor: "Richard Kelly",
-        preco: 59.90 
-    }
+  {
+    titulo: "It: A Coisa",
+    autor: "Stephen King",
+    preco: 79.90
+  },
+  {
+    titulo: "Drácula",
+    autor: "Bram Stoker",
+    preco: 45.00
+  }
 ];
 
 console.log(livros);
-console.log("Catalogo com " + livros.length + " livros");
-
+console.log("Catálogo com " + livros.length + " livros");

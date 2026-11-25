@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Teste CORS - XYZ Bookstore</title>
+</head>
+<body>
+  <h1>Teste Cross-Origin (CORS)</h1>
+  <button id="btn-post">Testar POST /carrinho</button>
+  <div id="saida"></div>
+
+  <script>
+    // 1. Teste GET automático ao carregar a página
+    fetch("http://localhost:3000/livros")
+      .then((r) => r.json())
+      .then((dados) => {
+        document.getElementById("saida").insertAdjacentHTML(
+          "beforeend",
+          "<h3>Livros recebidos:</h3><pre>" + JSON.stringify(dados, null, 2) + "</pre>"
+        );
+      })
+      .catch((e) => console.error("BLOQUEADO (ou API fora do ar):", e.message));
+
+    // 2. Teste POST cross-origin (dispara preflight OPTIONS)
+    document.getElementById("btn-post").addEventListener("click", () => {
+      fetch("http://localhost:3000/carrinho", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ livroId: "sally-adventure-book", quantidade: 1 })
+      })
+        .then((r) => r.json().then((dados) => ({ status: r.status, dados })))
+        .then((res) => console.log("Resposta do POST:", res))
+        .catch((e) => console.error("POST BLOQUEADO:", e.message));
+    });
+  </script>
+</body>
+</html>
